@@ -9,38 +9,38 @@ module HW2 exposing (..)
 -- Problem 1
 
 -- A
--- type alias Name = String
--- type alias Num = Int
+type alias Name = String
+type alias Num = Int
 
--- type alias Pars = List Name
--- type alias Vals = List Num
+type alias Pars = List Name
+type alias Vals = List Num
 
--- type Cmd 
---         = Pen Mode
---         | MoveTo Pos Pos
---         | Def Name Pars Cmd
---         | Call Name Vals
---         | Seq Cmd Cmd
+type Cmd 
+        = Pen Mode
+        | MoveTo Pos Pos
+        | Def Name Pars Cmd
+        | Call Name Vals
+        | Seq Cmd Cmd
 
--- type Mode 
---         = Up
---         | Down
+type Mode 
+        = Up
+        | Down
 
--- type Pos
---         = NumPos Num
---         | NamedPos Name
+type Pos
+        = NumPos Num
+        | NamedPos Name
 
 -- B
--- vector : Cmd
--- vector =
---         Def "vector" ["x1", "y1", "x2", "y2"]
---             (Seq
---                 (Pen Down)
---                 (Seq
---                     (MoveTo (NamedPos "x1") (NamedPos "y1"))
---                     (MoveTo (NamedPos "x2") (NamedPos "y2"))
---                 )
---             )
+vector : Cmd
+vector =
+        Def "vector" ["x1", "y1", "x2", "y2"]
+            (Seq
+                (Pen Down)
+                (Seq
+                    (MoveTo (NamedPos "x1") (NamedPos "y1"))
+                    (MoveTo (NamedPos "x2") (NamedPos "y2"))
+                )
+            )
 
 -- Problem 2
 
