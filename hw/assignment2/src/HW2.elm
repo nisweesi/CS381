@@ -12,9 +12,6 @@ module HW2 exposing (..)
 type alias Name = String
 type alias Num = Int
 
-type alias Pars = List Name
-type alias Vals = List Num
-
 type Cmd 
         = Pen Mode
         | MoveTo Pos Pos
@@ -29,6 +26,14 @@ type Mode
 type Pos
         = NumPos Num
         | NamedPos Name
+
+type Pars
+        = ManyP Name Pars
+        | SingleP Name
+
+type Vals
+        = ManyV Num Vals
+        | ManyV Num
 
 -- B
 vector : Cmd
