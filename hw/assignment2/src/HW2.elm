@@ -17,7 +17,7 @@ type Cmd
         | MoveTo Pos Pos
         | Def Name Pars Cmd
         | Call Name Vals
-        | Seq Cmd Cmd
+        | Sequence Cmd Cmd
 
 type Mode 
         = Up
