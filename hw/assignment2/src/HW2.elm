@@ -87,8 +87,11 @@ imp =
 
 -- C
 
+nonterminals : Grammar -> List NonTerm
+nonterminals grammar = 
+    List.map Tuple.first grammar
 
-
+-- terminals : Grammar -> List Term
 
 
 -- Problem 3
