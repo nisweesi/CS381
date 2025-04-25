@@ -33,7 +33,7 @@ type Pars
 
 type Vals
         = ManyV Num Vals
-        | ManyV Num
+        | SingleV Num
 
 -- B
 vector : Cmd
