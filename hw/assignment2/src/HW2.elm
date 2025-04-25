@@ -27,13 +27,9 @@ type Pos
         = NumPos Num
         | NamedPos Name
 
-type Pars
-        = ManyP Name Pars
-        | SingleP Name
+type Pars = List Name
 
-type Vals
-        = ManyV Num Vals
-        | SingleV Num
+type Vals = List Num
 
 -- B
 vector : Cmd
