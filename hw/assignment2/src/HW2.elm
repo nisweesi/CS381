@@ -17,7 +17,7 @@ type Cmd
         | MoveTo Pos Pos
         | Def Name Pars Cmd
         | Call Name Vals
-        | Seq Cmd Cmd
+        | Sequence Cmd Cmd
 
 type Mode 
         = Up
@@ -27,21 +27,21 @@ type Pos
         = NumPos Num
         | NamedPos Name
 
+-- Defining the type aliases as Lists allows Pars and Vals to work with vector
 type alias Pars = List Name
-
 type alias Vals = List Num
 
 -- B
 vector : Cmd
 vector =
         Def "vector" ["x1", "y1", "x2", "y2"]
-            (Seq
+            (Sequence
                 (Pen Down)
-                (Seq
+                (Sequence
                     (MoveTo (NamedPos "x1") (NamedPos "y1"))
                     (MoveTo (NamedPos "x2") (NamedPos "y2"))
-                )
-            )
+                 )
+             )
 
 -- Problem 2
 
@@ -52,12 +52,11 @@ type alias Term = String
 
 type alias Grammar = List Prod
 
-type alias Prod = (NonTerm, List Rhs)
+type alias Prod = (NonTerm, List RHS)
 
-type Rhs = Rhs (List Symbol)
+type RHS = RHS (List Symbol)
 
-type Symbol = Nt NonTerm
-            | T Term
+type Symbol = Nt NonTerm | T Term
 
 
 -- B
@@ -65,18 +64,18 @@ type Symbol = Nt NonTerm
 condP : Prod
 condP = 
         ( "cond",
-        [ Rhs [T "T"]
-        , Rhs [T "not", Nt "cond"]
-        , Rhs [T "(", Nt "cond", T ")"]
+        [ RHS [T "T"]
+        , RHS [T "not", Nt "cond"]
+        , RHS [T "(", Nt "cond", T ")"]
         ]
         )
 
 stmtP : Prod
 stmtP = 
         ( "stmt",
-        [ Rhs [T "skip"]
-        , Rhs [T "while", Nt "cond", T "do", T "{", Nt "stmt", T "}"]
-        , Rhs [Nt "stmt", T ";", Nt "stmt"]
+        [ RHS [T "skip"]
+        , RHS [T "while", Nt "cond", T "do", T "{", Nt "stmt", T "}"]
+        , RHS [Nt "stmt", T ";", Nt "stmt"]
         ]
         )
 
@@ -90,21 +89,36 @@ imp =
 
 nonterminals : Grammar -> List NonTerm
 nonterminals grammar = 
-    List.map Tuple.first grammar
+        List.map Tuple.first grammar
 
--- terminals : Grammar -> List Term
+terminals : Grammar -> List Term
+terminals grammar =
+    List.concatMap extractProd grammar
 
+extractProd : Prod -> List Term
+extractProd (_, rhs) =
+    List.concatMap extractSym rhs
+
+extractSym : RHS -> List Term
+extractSym (RHS symbols) =
+    List.concatMap extractTerminal symbols
+
+extractTerminal : Symbol -> List Term
+extractTerminal s =
+    case s of
+        T t -> [t]  -- Return terminal as list
+        Nt _ -> []  -- Otherwise discard
 
 -- Problem 3
 
 -- A
 type RegEx 
         = Empty
-        | Any
-        | Letter Char -- can be named anything?
+        | AnyChar
+        | Letter Char     
         | Optional RegEx
-        | Star RegEx -- or mul?
-        | Plus RegEx -- or add ?
+        | Star RegEx    -- 0 or more repetitions
+        | Plus RegEx      -- 1 or more repetitions
         | Seq RegEx RegEx
         | Or RegEx RegEx
 
@@ -115,6 +129,8 @@ simplify exp
             Star inn ->
                 case simplify inn of
                     Star e ->
+                        Star e
+                    Plus e ->
                         Star e
                     simplified ->
                         Star simplified
@@ -145,8 +161,8 @@ simplify exp
             Empty ->
                 Empty
             
-            Any ->
-                Any
+            AnyChar ->
+                AnyChar
 
             Letter c ->
                 Letter c
