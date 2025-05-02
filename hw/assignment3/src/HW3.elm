@@ -5,7 +5,7 @@ module HW3 exposing (..)
    William Morton
 -}
 
--- Stack Language
+-- 1. Stack Language
 -- Abstract Syntax
 type Op = LD Int | ADD | MULT | DUP
 type alias Prog = List Op
