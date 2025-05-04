@@ -37,14 +37,14 @@ semProg prog stack =
         [] ->
             Just stack
 
-        -- Recursively evaluates the operations and modifies stack
+        -- recursively evaluates the operations and modifies stack
         op::rs ->
             case semOp op stack of
-                -- Handles errors
+                -- handles errors
                 Nothing ->
                     Nothing
 
-                -- Handles operations
+                -- handles operations
                 Just newStack ->
                     semProg rs newStack
 
