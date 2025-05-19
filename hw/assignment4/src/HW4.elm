@@ -1,8 +1,8 @@
 module HW4 exposing (..)
 
 {- GROUP:
-   William Morton
    Nadir Isweesi
+   William Morton
 -}
 
 -- 1. Stack Language
