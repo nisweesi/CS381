@@ -102,3 +102,15 @@ semTC prog =
         Just _ -> semProg prog []
         Nothing -> Nothing
 
+-- 2. Shape Language
+
+-- A
+type Shape = X | LR Shape Shape | TB Shape Shape
+type alias BBox = (Int,Int)
+
+-- Define type checker
+bbox : Shape -> BBox
+
+-- B
+-- Define a type checker that uses the following declaration
+rect : Shape -> Maybe BBox
