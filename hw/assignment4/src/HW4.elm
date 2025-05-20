@@ -58,21 +58,21 @@ semOp op stack = case op of
                 Nothing
 
 
-semProg : Prog -> D
-semProg prog stack =
-    case prog of
-        [] ->
-            Just stack -- base case, the stack is done
-        -- recursively evaluates the operations and modifies stack
-        op::rs ->
+semProg : Prog -> Stack
+semProg prog =
+    -- eval the prog from left to right
+    List.foldl
+        -- take the operation and the currect state of the stack
+        (\op stack ->
+            -- return the new stack if succ Nothing otherwise
             case semOp op stack of
-                -- handles errors
-                Nothing ->
-                    Nothing
-
-                -- handles operations
-                Just newStack ->
-                    semProg rs newStack
+                Just newStack -> newStack
+                Nothing -> []
+        )
+        -- initial stat
+        []
+        -- list of operation to handle
+        prog
 
 rankOp : Op -> OpRank
 rankOp op =
@@ -108,6 +108,7 @@ rank prog r =
                 rank rest (r - n + m)
 
 -- make sure the program is well typed when start
+
 rankProg : Prog -> Maybe Rank
 rankProg prog =
     rank prog 0
@@ -115,11 +116,18 @@ rankProg prog =
 -- B
 
 -- if valid then runs the program on an empty stack.
+
+{-
+What is the new type of SemProg?
+Prog -> Stack
+Why this is safe?
+because we now call rankProg before evaluatin; which let us ensures the program is type safe, so you no longer need Maybe!
+-}
 semTC : Prog -> Maybe Stack
 semTC prog =
     case rankProg prog of
         Just _ ->
-            semProg prog []
+            Just (semProg prog)
         Nothing -> 
             Nothing
 
