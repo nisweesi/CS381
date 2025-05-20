@@ -111,6 +111,23 @@ type alias BBox = (Int,Int)
 -- Define type checker
 bbox : Shape -> BBox
 
+bbox shape = 
+    case shape of
+        X ->
+            (1, 1) -- base case
+        LR shape1 shape2 ->
+            let
+                (w1, h1) = bbox shape1
+                (w2, h2) = bbox shape2
+            in
+                (w1+w2, max h1 h2) -- total width and the maximum height
+        TB shape1 shape2 ->
+            let
+                (w1, h1) = bbox shape1
+                (w2, h2) = bbox shape2
+            in
+                (max w1 w2, h1+h2) -- total height and the total height
+
 -- B
 -- Define a type checker that uses the following declaration
-rect : Shape -> Maybe BBox
+-- rect : Shape -> Maybe BBox
