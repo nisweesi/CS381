@@ -18,7 +18,7 @@ GROUP: Nadir Isweesi, William Morton
 2. Static and Dynamic Scope
 
 2a. z = 33
-2b. z = 39
+2b. z = 26
 
 3. Parameter Passing
 
