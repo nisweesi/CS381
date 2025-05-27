@@ -2,18 +2,24 @@ GROUP: Nadir Isweesi, William Morton
 
 1. Runtime Stack
 
-[x=?]
-[y=?, x=?]
-[y=1, x=?]
-[f{}, y=1, x=?]
-   [x=2]
-      [x=1]
-         [x=0]
-         [res=1, x=0]
-      [res=2, x=1]
-   [res=5, x=2]
-[f{}, y=5, x=5]
-[y=5, x=5]
+1 [x=?]
+2 [y=?, x=?]
+3 [y=1, x=?]
+4 [f={}, y=1, x=?]
+11 >>
+  5 [x=2, f={}, ...]
+  8 >>
+    5 [x=1, x=2, f={}, ...]
+    8 >>
+      5 [x=0, x=1, x=2, f={}, ...]
+      9 [res=1, x=0]
+    << 
+    9 [res=2, x=1]
+  << 
+  9 [res=5, x=2]
+<<
+10 [f={}, y=5, x=5]
+11 [y=5, x=5]
 
 2. Static and Dynamic Scope
 
