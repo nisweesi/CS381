@@ -125,5 +125,5 @@ GROUP: Nadir Isweesi, William Morton
   15 [g=.,z=13,y=13]
 
 3a. y=10 z=13
-3b. y=15 z=14
+3b. y=15 z=15
 3c. y=13 z=13
