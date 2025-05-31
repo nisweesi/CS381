@@ -58,3 +58,5 @@ meet(Student1, Student2) :-
     schedule(Student2, Place, Time2),
     Student1 \= Student2,
     Time2 is Time1 + 1.
+
+% Exercise 2 List Predicates and Arithmetic
