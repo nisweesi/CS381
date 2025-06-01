@@ -60,3 +60,38 @@ meet(Student1, Student2) :-
     Time2 is Time1 + 1.
 
 % Exercise 2 List Predicates and Arithmetic
+% DO NOT USE flatten and nth, you can use append or member
+
+% A
+% Base cases
+rdup([], []).
+rdup([X], [X]).
+% Recursion
+rdup([X,X|T], M) :- 
+    rdup([X|T], M).
+rdup([X,Y|T], [X|M]) :- 
+    X \= Y, 
+    rdup([Y|T], M).
+
+% B
+flat([], []).
+flat(X, [X]) :- X \= [], \+ is_list(X).
+flat([H|T], F) :-
+    flat(H, FH),
+    flat(T, FT),
+    append(FH, FT, F).
+
+% C
+% lookup(Pos, List, Elem)
+lookup(1, [H|_], H).
+lookup(N, [_|T], Elem) :-
+    N > 1,
+    N1 is N - 1,
+    lookup(N1, T, Elem).
+
+% project(PosList, ElemList, ResultList)
+project([], _, []).
+project([P|Ps], List, [E|Es]) :-
+    lookup(P, List, E),
+    project(Ps, List, Es).
+    
