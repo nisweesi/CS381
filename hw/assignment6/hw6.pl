@@ -91,7 +91,12 @@ lookup(N, [_|T], Elem) :-
 
 % project(PosList, ElemList, ResultList)
 project([], _, []).
-project([P|Ps], List, [E|Es]) :-
-    lookup(P, List, E),
-    project(Ps, List, Es).
-    
+
+project([P|Ps], List, Result) :-
+    lookup(P, List, E),         
+    !,                          
+    project(Ps, List, Rest),
+    Result = [E|Rest].
+
+project([_|Ps], List, Result) :-
+    project(Ps, List, Result).
