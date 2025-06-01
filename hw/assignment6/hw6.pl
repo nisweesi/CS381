@@ -82,7 +82,7 @@ flat([H|T], F) :-
     append(FH, FT, F).
 
 % C
-% lookup(Pos, List, Elem)
+% Helper func
 lookup(1, [H|_], H).
 lookup(N, [_|T], Elem) :-
     N > 1,
@@ -91,12 +91,10 @@ lookup(N, [_|T], Elem) :-
 
 % project(PosList, ElemList, ResultList)
 project([], _, []).
-
 project([P|Ps], List, Result) :-
     lookup(P, List, E),         
     !,                          
     project(Ps, List, Rest),
     Result = [E|Rest].
-
 project([_|Ps], List, Result) :-
     project(Ps, List, Result).
